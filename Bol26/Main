@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Operaciones<Integer> operaciones = new Operaciones<>();
+        List<Integer> numeros = new ArrayList<>();
+        numeros.add(5);
+        numeros.add(10);
+        numeros.add(3);
+        numeros.add(8);
+
+        // Calcular el mínimo
+        System.out.println("Mínimo: " + operaciones.calcularMinimo(numeros));
+
+        // Calcular el máximo
+        System.out.println("Máximo: " + operaciones.calcularMaximo(numeros));
+
+        // Buscar un objeto
+        int posicion = operaciones.buscarObjeto(numeros, 3);
+        if (posicion != -1) {
+            System.out.println("El objeto se encuentra en la posición " + posicion);
+        } else {
+            System.out.println("El objeto no se encuentra en la lista.");
+        }
+
+        // Borrar la primera aparición de un objeto
+        Integer objetoEliminado = operaciones.borrarPrimeraAparicion(numeros, 10);
+        if (objetoEliminado != null) {
+            System.out.println("Se ha eliminado el objeto: " + objetoEliminado);
+            System.out.println("Lista después de borrar: " + numeros);
+        } else {
+            System.out.println("El objeto no se encuentra en la lista.");
+        }
+    }
+}
+

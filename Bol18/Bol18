@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+class TemperaturaErradaExcepcion extends Exception {
+    public TemperaturaErradaExcepcion(String mensaje) {
+        super(mensaje);
+    }
+}
+
+public class ConversorTemperaturas {
+    static final float TEMPERATURA_MINIMA = 80;
+
+    public static float centigradosAFharenheit(float centigrados) throws TemperaturaErradaExcepcion {
+        if (centigrados < TEMPERATURA_MINIMA) {
+            throw new TemperaturaErradaExcepcion("A temperatura non pode ser menor a 80 ºC");
+        } else {
+            return 9.0f / 5.0f * centigrados + 32.0f;
+        }
+    }
+
+    public static float centigradosAReamur(float centigrados) {
+        return 4.0f / 5.0f * centigrados;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Introduce a temperatura en graos centígrados: ");
+            float temperaturaCentigrados = scanner.nextFloat();
+            float temperaturaFharenheit = centigradosAFharenheit(temperaturaCentigrados);
+            float temperaturaReamur = centigradosAReamur(temperaturaCentigrados);
+            System.out.println("Temperatura en graos Fharenheit: " + temperaturaFharenheit);
+            System.out.println("Temperatura en graos Reamur: " + temperaturaReamur);
+        } catch (InputMismatchException e) {
+            System.out.println("Por favor, introduce un número válido.");
+        } catch (TemperaturaErradaExcepcion e) {
+            System.out.println(e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+}
+

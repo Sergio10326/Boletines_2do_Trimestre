@@ -1,0 +1,38 @@
+interface IPodeCantar {
+    void cantar();
+}
+
+class Persoa implements IPodeCantar {
+    @Override
+    public void cantar() {
+        System.out.println("Do Re Mi Fa Sol La Si");
+    }
+}
+
+class Canario implements IPodeCantar {
+    @Override
+    public void cantar() {
+        System.out.println("Pio Pio Pio");
+    }
+}
+
+class Galo implements IPodeCantar {
+    @Override
+    public void cantar() {
+        System.out.println("Quiquiriquí");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        IPodeCantar persoa = new Persoa();
+        persoa.cantar();
+
+        IPodeCantar canario = new Canario();
+        canario.cantar();
+
+        IPodeCantar galo = new Galo();
+        galo.cantar();
+    }
+}
+

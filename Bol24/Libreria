@@ -1,0 +1,60 @@
+package libreria;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class Libreria {
+    private List<Libro> libros;
+
+    public Libreria() {
+        libros = new ArrayList<>();
+    }
+
+    public void engadirLibro(Libro libro) {
+        libros.add(libro);
+    }
+
+    public void venderLibro(Libro libro) throws Exception {
+        if (libros == null) {
+            throw new Exception("Error: la lista de libros es nula.");
+        }
+        libros.remove(libro);
+    }
+
+    public void amosarLibros() throws Exception {
+        if (libros == null) {
+            throw new Exception("Error: la lista de libros es nula.");
+        }
+        if (libros.isEmpty()) {
+            System.out.println("No hay libros en la librería.");
+            return;
+        }
+        System.out.println("Libros en la librería:");
+        Collections.sort(libros, Comparator.comparing(Libro::getTitulo));
+        for (Libro libro : libros) {
+            System.out.println(libro);
+        }
+    }
+
+    public void darBaixaLibros() throws Exception {
+        if (libros == null) {
+            throw new Exception("Error: la lista de libros es nula.");
+        }
+        libros.removeIf(libro -> libro.getNumeroUnidades() == 0);
+    }
+
+    public Libro consultarLibro(String titulo) throws Exception {
+        if (libros == null) {
+            throw new Exception("Error: la lista de libros es nula.");
+        }
+        for (Libro libro : libros) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                return libro;
+            }
+        }
+        throw new Exception("Libro no encontrado.");
+    }
+}
+

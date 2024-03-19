@@ -1,0 +1,163 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class MantenimientoLibreria {
+    private static final String RUTA_ARCHIVO = "libreria.txt";
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            File archivo = new File(RUTA_ARCHIVO);
+            if (!archivo.exists()) {
+                archivo.createNewFile();
+            }
+
+            while (true) {
+                System.out.println("\n--- Menú de Mantenimiento de Librería ---");
+                System.out.println("a) Engadir");
+                System.out.println("b) Consultar");
+                System.out.println("c) Amosar");
+                System.out.println("d) Borrar");
+                System.out.println("e) Modificar");
+                System.out.println("f) Saír");
+                System.out.print("Escolle unha opción: ");
+                String opcion = scanner.nextLine();
+
+                switch (opcion) {
+                    case "a":
+                        engadirLibro();
+                        break;
+                    case "b":
+                        consultarLibro();
+                        break;
+                    case "c":
+                        amosarLibros();
+                        break;
+                    case "d":
+                        borrarLibros();
+                        break;
+                    case "e":
+                        modificarPrecio();
+                        break;
+                    case "f":
+                        System.out.println("Saíndo...");
+                        scanner.close();
+                        return;
+                    default:
+                        System.out.println("Opción non válida.");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void engadirLibro() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--- Engadir Libro ---");
+        System.out.print("Nome do libro: ");
+        String nome = scanner.nextLine();
+        System.out.print("Autor: ");
+        String autor = scanner.nextLine();
+        System.out.print("Prezo: ");
+        double prezo = scanner.nextDouble();
+        System.out.print("Unidades: ");
+        int unidades = scanner.nextInt();
+
+        FileWriter fw = new FileWriter(RUTA_ARCHIVO, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(nome + ";" + autor + ";" + prezo + ";" + unidades + "\n");
+        bw.close();
+        System.out.println("Libro engadido con éxito.");
+    }
+
+    private static void consultarLibro() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--- Consultar Libro ---");
+        System.out.print("Introduce o título do libro: ");
+        String titulo = scanner.nextLine();
+
+        BufferedReader br = new BufferedReader(new FileReader(RUTA_ARCHIVO));
+        String linea;
+        boolean encontrado = false;
+        while ((linea = br.readLine()) != null) {
+            String[] partes = linea.split(";");
+            if (partes[0].equalsIgnoreCase(titulo)) {
+                System.out.println("Prezo do libro: " + partes[2]);
+                encontrado = true;
+                break;
+            }
+        }
+        br.close();
+        if (!encontrado) {
+            System.out.println("Non temos ese libro na librería.");
+        }
+    }
+
+    private static void amosarLibros() throws IOException {
+        System.out.println("\n--- Amosar Libros ---");
+        BufferedReader br = new BufferedReader(new FileReader(RUTA_ARCHIVO));
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            System.out.println(linea);
+        }
+        br.close();
+    }
+
+    private static void borrarLibros() throws IOException {
+        System.out.println("\n--- Borrar Libros ---");
+        List<String> lineas = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader(RUTA_ARCHIVO));
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            String[] partes = linea.split(";");
+            int unidades = Integer.parseInt(partes[3]);
+            if (unidades > 0) {
+                lineas.add(linea);
+            }
+        }
+        br.close();
+
+        FileWriter fw = new FileWriter(RUTA_ARCHIVO);
+        BufferedWriter bw = new BufferedWriter(fw);
+        for (String l : lineas) {
+            bw.write(l + "\n");
+        }
+        bw.close();
+        System.out.println("Libros con unidades > 0 conservados.");
+    }
+
+    private static void modificarPrecio() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--- Modificar Precio ---");
+        System.out.print("Introduce o título do libro a modificar: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Introduce o novo prezo: ");
+        double novoPrezo = scanner.nextDouble();
+
+        List<String> lineas = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader(RUTA_ARCHIVO));
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            String[] partes = linea.split(";");
+            if (partes[0].equalsIgnoreCase(titulo)) {
+                partes[2] = String.valueOf(novoPrezo);
+                linea = String.join(";", partes);
+            }
+            lineas.add(linea);
+        }
+        br.close();
+
+        FileWriter fw = new FileWriter(RUTA_ARCHIVO);
+        BufferedWriter bw = new BufferedWriter(fw);
+        for (String l : lineas) {
+            bw.write(l + "\n");
+        }
+        bw.close();
+        System.out.println("Prezo modificado con éxito.");
+    }
+}
+

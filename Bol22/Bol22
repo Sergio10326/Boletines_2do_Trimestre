@@ -1,0 +1,81 @@
+import java.util.*;
+
+public class Boletin22 {
+
+    public static void main(String[] args) {
+        // 1- Gravar e imprimir a táboa
+        int[][] goles = {{3, 4, 2}, {1, 2, 1}, {3, 0, 1}};
+        String[] equipos = {"Celta", "Bilbao", "Malaga"};
+        
+        System.out.println("Táboa de goles:");
+        System.out.println("Equipo/Xornada\tX1\tX2\tX3");
+        for (int i = 0; i < goles.length; i++) {
+            System.out.print(equipos[i] + "\t\t");
+            for (int j = 0; j < goles[i].length; j++) {
+                System.out.print(goles[i][j] + "\t");
+            }
+            System.out.println();
+        }
+
+        // 2- Obter unha listaxe dos equipos por orde de menor n° de goles na liga
+        Map<String, Integer> equiposYGoles = new HashMap<>();
+        for (int i = 0; i < goles.length; i++) {
+            int totalGoles = 0;
+            for (int j = 0; j < goles[i].length; j++) {
+                totalGoles += goles[i][j];
+            }
+            equiposYGoles.put(equipos[i], totalGoles);
+        }
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(equiposYGoles.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+        System.out.println("\nEquipos por orde de menor número de goles:");
+        for (Map.Entry<String, Integer> entry : list) {
+            System.out.println(entry.getKey() + ": " + entry.getValue() + " goles");
+        }
+
+        // 3- Indicar o equipo que marca máis goles en cada xornada
+        System.out.println("\nEquipo que marca máis goles en cada xornada:");
+        for (int j = 0; j < goles[0].length; j++) {
+            int maxGoles = Integer.MIN_VALUE;
+            String equipoMax = "";
+            for (int i = 0; i < goles.length; i++) {
+                if (goles[i][j] > maxGoles) {
+                    maxGoles = goles[i][j];
+                    equipoMax = equipos[i];
+                }
+            }
+            System.out.println("X" + (j + 1) + ": " + equipoMax + " (" + maxGoles + " goles)");
+        }
+
+        // 4- Que equipo e en que xornada se rexistran máis goles?
+        int maxGoles = Integer.MIN_VALUE;
+        String equipoMax = "";
+        int xornadaMax = -1;
+        for (int i = 0; i < goles.length; i++) {
+            for (int j = 0; j < goles[i].length; j++) {
+                if (goles[i][j] > maxGoles) {
+                    maxGoles = goles[i][j];
+                    equipoMax = equipos[i];
+                    xornadaMax = j + 1;
+                }
+            }
+        }
+        System.out.println("\nEquipo con más goles: " + equipoMax);
+        System.out.println("Xornada con más goles: X" + xornadaMax + " (" + maxGoles + " goles)");
+
+        // 5- Consultas por equipo e xornada indicando o n° de goles
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("\nIntroduce o equipo: ");
+        String equipoConsulta = scanner.nextLine();
+        System.out.print("Introduce a xornada (1, 2 ou 3): ");
+        int xornadaConsulta = scanner.nextInt();
+        int indexEquipo = Arrays.asList(equipos).indexOf(equipoConsulta);
+        if (indexEquipo != -1 && xornadaConsulta >= 1 && xornadaConsulta <= 3) {
+            System.out.println("Goles de " + equipoConsulta + " na xornada X" + xornadaConsulta + ": " + goles[indexEquipo][xornadaConsulta - 1]);
+        } else {
+            System.out.println("Equipo ou xornada incorrectos.");
+        }
+        scanner.close();
+    }
+}
+

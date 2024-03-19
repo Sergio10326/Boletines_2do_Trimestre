@@ -1,0 +1,101 @@
+Paso 1: Definir Interfaces y Clases
+
+// IPodeCamiñar es una interface que representa la capacidad de caminar.
+interface IPodeCamiñar {
+    void camiñar();
+}
+
+// IPodeNadar es una interface que representa la capacidad de nadar.
+interface IPodeNadar {
+    void nadar();
+}
+
+// IPodeVoar es una interface que representa la capacidad de volar.
+interface IPodeVoar {
+    void voar();
+}
+
+// Mamifero es una clase que implementa la interface IPodeCamiñar.
+class Mamifero implements IPodeCamiñar {
+    @Override
+    public void camiñar() {
+        System.out.println("Mamifero camiña");
+    }
+}
+
+// Gato es una subclase de Mamifero y también implementa IPodeNadar.
+class Gato extends Mamifero implements IPodeNadar {
+    @Override
+    public void nadar() {
+        System.out.println("Gato nada");
+    }
+}
+
+// Felino es una subclase de Mamifero y también implementa IPodeNadar.
+class Felino extends Mamifero implements IPodeNadar {
+    @Override
+    public void nadar() {
+        System.out.println("Felino nada");
+    }
+}
+
+// Tigre es una subclase de Felino.
+class Tigre extends Felino {
+    // Hereda los métodos de camiñar y nadar de Felino.
+}
+
+// Morcego es una subclase de Mamifero e implementa IPodeVoar.
+class Morcego extends Mamifero implements IPodeVoar {
+    @Override
+    public void voar() {
+        System.out.println("Morcego vuela");
+    }
+}
+
+// Aves es una superclase para diferentes tipos de aves.
+class Aves implements IPodeCamiñar {
+    @Override
+    public void camiñar() {
+        System.out.println("Ave camiña");
+    }
+}
+
+// Avestruz es una subclase de Aves.
+class Avestruz extends Aves {
+    // Hereda el método de camiñar de Aves.
+}
+
+// Papagaio es una subclase de Aves e implementa IPodeVoar.
+class Papagaio extends Aves implements IPodeVoar {
+    @Override
+    public void voar() {
+        System.out.println("Papagaio vuela");
+    }
+}
+``
+
+Paso 2: Clase de Aplicación
+
+public class Aplicacion {
+    public static void main(String[] args) {
+        Gato gato = new Gato();
+        gato.camiñar();
+        gato.nadar();
+
+        Avestruz avestruz = new Avestruz();
+        avestruz.camiñar();
+
+        Papagaio papagaio = new Papagaio();
+        papagaio.camiñar();
+        papagaio.voar();
+
+        Morcego morcego = new Morcego();
+        morcego.camiñar();
+        morcego.voar();
+
+        Tigre tigre = new Tigre();
+        tigre.camiñar();
+        tigre.nadar();
+    }
+}
+

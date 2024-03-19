@@ -1,0 +1,50 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Ejercicio3 {
+    public static void main(String[] args) {
+        String[] alumnos = {"Juan", "María", "Pedro", "Ana", "Luis", "Laura", "Carlos", "Sara", "David", "Elena",
+                            "Marta", "José", "Isabel", "Javier", "Lucía", "Pablo", "Carmen", "Diego", "Raquel", "Rubén",
+                            "Alba", "Francisco", "Natalia", "Antonio", "Beatriz", "Miguel", "Lorena", "Daniel", "Paula", "Alejandro"};
+        int[] notas = {10, 15, 12, 8, 17, 20, 11, 9, 14, 13,
+                       16, 18, 7, 10, 11, 13, 15, 19, 18, 14,
+                       12, 9, 10, 11, 13, 15, 16, 18, 17, 12};
+
+        Scanner scanner = new Scanner(System.in);
+
+        // Visualizar la nota de un alumno determinado
+        System.out.print("Introduce el nombre del alumno: ");
+        String nombreAlumno = scanner.nextLine();
+        int index = Arrays.asList(alumnos).indexOf(nombreAlumno);
+        if (index != -1) {
+            System.out.println("La nota de " + nombreAlumno + " es: " + notas[index]);
+        } else {
+            System.out.println("Alumno no encontrado.");
+        }
+
+        // Visualizar una lista con el nombre de los alumnos aprobados
+        System.out.println("Alumnos aprobados:");
+        for (int i = 0; i < notas.length; i++) {
+            if (notas[i] >= 10) {
+                System.out.println(alumnos[i]);
+            }
+        }
+
+        // Ordenar el array de notas en orden creciente
+        Arrays.sort(notas);
+        System.out.println("Notas ordenadas en orden creciente: " + Arrays.toString(notas));
+
+        // Visualizar la nota de un alumno determinado por teclado
+        System.out.print("Introduce el nombre del alumno para ver su nota: ");
+        nombreAlumno = scanner.nextLine();
+        index = Arrays.asList(alumnos).indexOf(nombreAlumno);
+        if (index != -1) {
+            System.out.println("La nota de " + nombreAlumno + " es: " + notas[index]);
+        } else {
+            System.out.println("Alumno no encontrado.");
+        }
+
+        scanner.close();
+    }
+}
+

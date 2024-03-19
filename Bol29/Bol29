@@ -1,0 +1,212 @@
+import java.util.Random;
+
+// Ejercicio 1: Arrays Multidimensionales
+public class Ejercicio1 {
+    public static void main(String[] args) {
+        int[][] array = new int[3][3];
+        Random random = new Random();
+
+        // Inicializar el array con valores aleatorios
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                array[i][j] = random.nextInt(100);
+            }
+        }
+
+        // Encontrar el valor máximo y su posición
+        int maximo = array[0][0];
+        int filaMaximo = 0;
+        int columnaMaximo = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (array[i][j] > maximo) {
+                    maximo = array[i][j];
+                    filaMaximo = i;
+                    columnaMaximo = j;
+                }
+            }
+        }
+
+        System.out.println("El valor máximo es: " + maximo);
+        System.out.println("Se encuentra en la posición [" + filaMaximo + "][" + columnaMaximo + "]");
+    }
+}
+
+// Ejercicio 2: Uso de Genéricos
+class Caja<T> {
+    private T objeto;
+
+    public void establecer(T objeto) {
+        this.objeto = objeto;
+    }
+
+    public T obtener() {
+        return objeto;
+    }
+}
+
+// Ejercicio 3: Clases Abstractas e Interfaces
+abstract class Figura {
+    abstract void dibujar();
+}
+
+class Circulo extends Figura {
+    @Override
+    void dibujar() {
+        System.out.println("Dibujando un círculo...");
+    }
+}
+
+class Cuadrado extends Figura {
+    @Override
+    void dibujar() {
+        System.out.println("Dibujando un cuadrado...");
+    }
+}
+
+interface Vehiculo {
+    void arrancar();
+    void detener();
+    void acelerar();
+}
+
+class Coche implements Vehiculo {
+    @Override
+    public void arrancar() {
+        System.out.println("Arrancando el coche...");
+    }
+
+    @Override
+    public void detener() {
+        System.out.println("Deteniendo el coche...");
+    }
+
+    @Override
+    public void acelerar() {
+        System.out.println("Acelerando el coche...");
+    }
+}
+
+class Motocicleta implements Vehiculo {
+    @Override
+    public void arrancar() {
+        System.out.println("Arrancando la motocicleta...");
+    }
+
+    @Override
+    public void detener() {
+        System.out.println("Deteniendo la motocicleta...");
+    }
+
+    @Override
+    public void acelerar() {
+        System.out.println("Acelerando la motocicleta...");
+    }
+}
+
+// Ejercicio 4: Manejo de Excepciones
+import java.util.Scanner;
+
+public class Ejercicio4 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese dos números para dividir:");
+        try {
+            double numero1 = scanner.nextDouble();
+            double numero2 = scanner.nextDouble();
+            double resultado = numero1 / numero2;
+            System.out.println("El resultado de la división es: " + resultado);
+        } catch (ArithmeticException e) {
+            System.out.println("Error: división por cero.");
+        } catch (Exception e) {
+            System.out.println("Error: entrada inválida.");
+        }
+    }
+}
+
+// Ejercicio 5: Serialización
+import java.io.*;
+
+class Empleado implements Serializable {
+    private String nombre;
+    private int id;
+    private String departamento;
+
+    public Empleado(String nombre, int id, String departamento) {
+        this.nombre = nombre;
+        this.id = id;
+        this.departamento = departamento;
+    }
+
+    public String toString() {
+        return "Empleado{" +
+                "nombre='" + nombre + '\'' +
+                ", id=" + id +
+                ", departamento='" + departamento + '\'' +
+                '}';
+    }
+}
+
+public class Ejercicio5 {
+    public static void main(String[] args) {
+        Empleado empleado1 = new Empleado("Juan", 1, "Ventas");
+        Empleado empleado2 = new Empleado("María", 2, "Contabilidad");
+
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("empleados.txt"));
+            out.writeObject(empleado1);
+            out.writeObject(empleado2);
+            out.close();
+
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("empleados.txt"));
+            Empleado empleadoRecuperado1 = (Empleado) in.readObject();
+            Empleado empleadoRecuperado2 = (Empleado) in.readObject();
+            in.close();
+
+            System.out.println("Empleado recuperado 1: " + empleadoRecuperado1);
+            System.out.println("Empleado recuperado 2: " + empleadoRecuperado2);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+// Ejercicio 6: Foreach y Collections
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+
+public class Ejercicio6 {
+    public static void main(String[] args) {
+        // 6.1: Utilizando un bucle foreach para iterar sobre un ArrayList de cadenas
+        List<String> listaCadenas = new ArrayList<>();
+        listaCadenas.add("Hola");
+        listaCadenas.add("Mundo");
+        listaCadenas.add("Java");
+
+        for (String cadena : listaCadenas) {
+            System.out.println(cadena);
+        }
+
+        // 6.2: Creando un HashSet de números enteros y eliminando valores específicos con un Iterator
+        HashSet<Integer> conjuntoNumeros = new HashSet<>();
+        conjuntoNumeros.add(1);
+        conjuntoNumeros.add(2);
+        conjuntoNumeros.add(3);
+        conjuntoNumeros.add(4);
+        conjuntoNumeros.add(5);
+
+        Iterator<Integer> iterator = conjuntoNumeros.iterator();
+        while (iterator.hasNext()) {
+            int numero = iterator.next();
+            if (numero % 2 == 0) {
+                iterator.remove();
+            }
+        }
+
+        System.out.println("Conjunto después de eliminar los números pares: " + conjuntoNumeros);
+    }
+}
+

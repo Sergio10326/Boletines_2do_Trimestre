@@ -1,0 +1,18 @@
+import java.util.Scanner;
+
+public class Ejercicio4 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Introduce el número del DNI: ");
+        int dni = scanner.nextInt();
+
+        char[] letras = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
+        char letraNif = letras[dni % 23];
+
+        System.out.println("La letra del NIF es: " + letraNif);
+
+        scanner.close();
+    }
+}
+

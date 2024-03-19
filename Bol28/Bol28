@@ -1,0 +1,198 @@
+// Ejercicio 1: Trabajando con Arrays
+class Empleado {
+    private String nombre;
+    private String departamento;
+    private double salario;
+
+    public Empleado(String nombre, String departamento, double salario) {
+        this.nombre = nombre;
+        this.departamento = departamento;
+        this.salario = salario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+}
+
+import java.util.ArrayList;
+import java.util.List;
+
+class GestorDeEmpleados {
+    private List<Empleado> empleados;
+
+    public GestorDeEmpleados() {
+        this.empleados = new ArrayList<>();
+    }
+
+    public void agregarEmpleado(Empleado empleado) {
+        empleados.add(empleado);
+    }
+
+    public void mostrarEmpleados() {
+        for (Empleado empleado : empleados) {
+            System.out.println("Nombre: " + empleado.getNombre() +
+                    ", Departamento: " + empleado.getDepartamento() +
+                    ", Salario: " + empleado.getSalario());
+        }
+    }
+
+    public void buscarEmpleadoPorNombre(String nombre) {
+        for (Empleado empleado : empleados) {
+            if (empleado.getNombre().equals(nombre)) {
+                System.out.println("Nombre: " + empleado.getNombre() +
+                        ", Departamento: " + empleado.getDepartamento() +
+                        ", Salario: " + empleado.getSalario());
+                return;
+            }
+        }
+        System.out.println("No se encontró ningún empleado con ese nombre.");
+    }
+}
+
+// Ejercicio 2: Uso de Genéricos
+class Caja<T> {
+    private T objeto;
+
+    public void agregar(T objeto) {
+        this.objeto = objeto;
+    }
+
+    public T obtener() {
+        return objeto;
+    }
+}
+
+// Ejercicio 3: Clases Abstractas
+abstract class FiguraGeometrica {
+    abstract double calcularArea();
+}
+
+class Circulo extends FiguraGeometrica {
+    private double radio;
+
+    public Circulo(double radio) {
+        this.radio = radio;
+    }
+
+    @Override
+    double calcularArea() {
+        return Math.PI * radio * radio;
+    }
+}
+
+class Rectangulo extends FiguraGeometrica {
+    private double base;
+    private double altura;
+
+    public Rectangulo(double base, double altura) {
+        this.base = base;
+        this.altura = altura;
+    }
+
+    @Override
+    double calcularArea() {
+        return base * altura;
+    }
+}
+
+// Ejercicio 4: Interfaces
+interface InstrumentoMusical {
+    void tocar();
+}
+
+class Guitarra implements InstrumentoMusical {
+    @Override
+    public void tocar() {
+        System.out.println("Tocando la guitarra...");
+    }
+}
+
+class Piano implements InstrumentoMusical {
+    @Override
+    public void tocar() {
+        System.out.println("Tocando el piano...");
+    }
+}
+
+// Integración Final
+interface Administrable<T> {
+    void agregar(T elemento);
+    void eliminar(T elemento);
+    void listar();
+}
+
+class GestorDeEmpleadosImplementacion extends GestorDeEmpleados implements Administrable<Empleado> {
+    @Override
+    public void eliminar(Empleado empleado) {
+        empleados.remove(empleado);
+    }
+
+    @Override
+    public void listar() {
+        mostrarEmpleados();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Ejercicio 1
+        GestorDeEmpleados gestor = new GestorDeEmpleados();
+        gestor.agregarEmpleado(new Empleado("Juan", "Ventas", 2000));
+        gestor.agregarEmpleado(new Empleado("María", "Contabilidad", 2500));
+        gestor.mostrarEmpleados();
+        gestor.buscarEmpleadoPorNombre("Juan");
+
+        // Ejercicio 2
+        Caja<Integer> cajaEntero = new Caja<>();
+        cajaEntero.agregar(10);
+        System.out.println("Valor en la caja de enteros: " + cajaEntero.obtener());
+
+        Caja<String> cajaString = new Caja<>();
+        cajaString.agregar("Hola");
+        System.out.println("Valor en la caja de cadenas: " + cajaString.obtener());
+
+        // Ejercicio 3
+        FiguraGeometrica circulo = new Circulo(5);
+        System.out.println("Área del círculo: " + circulo.calcularArea());
+
+        FiguraGeometrica rectangulo = new Rectangulo(4, 6);
+        System.out.println("Área del rectángulo: " + rectangulo.calcularArea());
+
+        // Ejercicio 4
+        InstrumentoMusical guitarra = new Guitarra();
+        guitarra.tocar();
+
+        InstrumentoMusical piano = new Piano();
+        piano.tocar();
+
+        // Integración Final
+        GestorDeEmpleadosImplementacion gestorImplementacion = new GestorDeEmpleadosImplementacion();
+        gestorImplementacion.agregar(new Empleado("Pedro", "Recursos Humanos", 2200));
+        gestorImplementacion.agregar(new Empleado("Ana", "Marketing", 2800));
+        gestorImplementacion.listar();
+        gestorImplementacion.eliminar(gestorImplementacion.obtener().get(0));
+        gestorImplementacion.listar();
+    }
+}
+
